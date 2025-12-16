@@ -17,7 +17,7 @@ public class WikipediaTest {
     private WebDriverWait wait;
     private static final By SEARCH_INPUT = By.name("search");
     private static final By ARTICLE_TITLE = By.id("firstHeading");
-    private static final By SUGGESTIONS_DROPDOWN = By.cssSelector(".suggestions-dropdown");
+    private static final By SUGGESTIONS_DROPDOWN = By.cssSelector("#v-0");
     private static final By FIRST_ARTICLE_LINK = By.cssSelector("div.mw-parser-output p a"); // pierwszy link w artykule
     private static final By HOMEPAGE_LINK = By.cssSelector(".mw-logo"); //wraca do strony glownej
     private static final By TABLE_OF_CONTENTS = By.id("vector-toc"); // spis tresci
@@ -76,18 +76,15 @@ public class WikipediaTest {
         assertThat(title.getText()).containsIgnoringCase("Java"); //sprawdzamy czy header zawiera szukana fraze
     }
     /// w teorii powinno dzialac
-//    @DisplayName("Sould display suggest when typing in search")
-//    @Test
-//    void shouldDisplaySuggestWhenTypingInSearch(){
-//        WebElement searchInput = wait.until(ExpectedConditions.visibilityOfElementLocated(SEARCH_INPUT));
-//        searchInput.sendKeys("Java");
-//        WebElement suggestions = wait.until(ExpectedConditions.presenceOfElementLocated(SUGGESTIONS_DROPDOWN));
-//
-//        assertAll(
-//                () -> assertTrue(suggestions.isDisplayed(), "Suggestions dropdown should be visible"),
-//                () -> assertFalse(suggestions.getText().isEmpty(), "Suggestions dropdown should not be empty")
-//        );
-//    }
+    @DisplayName("Sould display suggest when typing in search")
+    @Test
+    void shouldDisplaySuggestWhenTypingInSearch(){
+        WebElement searchInput = wait.until(ExpectedConditions.visibilityOfElementLocated(SEARCH_INPUT));
+        searchInput.sendKeys("Java");
+        WebElement suggestions = wait.until(ExpectedConditions.visibilityOfElementLocated(SUGGESTIONS_DROPDOWN));
+
+        assertThat(suggestions.isDisplayed()).isTrue();
+    }
 
     @DisplayName("Should navigate to a linked article from main article")
     @Test
